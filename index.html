@@ -3,294 +3,210 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Roop Scooters - SRL Group</title>
+  <title>Side Menu Example</title>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <style>
     body {
       margin: 0;
       font-family: 'Roboto', sans-serif;
-      background: #f4f4f4;
+      background-color: #fff;
     }
 
-    /* Navbar Styles */
-    .navbar {
+    /* Burger Icon */
+    .burger {
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      width: 30px;
+      height: 25px;
+      cursor: pointer;
+      z-index: 1001;
+    }
+    .burger span {
+      display: block;
+      height: 3px;
+      background: #333;
+      margin: 6px 0;
+      transition: 0.4s;
+    }
+
+    /* Side Menu */
+    .side-menu {
+      position: fixed;
+      top: 0;
+      left: -280px;
+      width: 280px;
+      height: 100%;
+      background: #fff;
+      box-shadow: 2px 0 8px rgba(0,0,0,0.2);
+      overflow-y: auto;
+      transition: 0.3s ease;
+      z-index: 1000;
+      padding-top: 60px;
+    }
+
+    .side-menu.open {
+      left: 0;
+    }
+
+    .menu-item {
+      border-bottom: 1px solid #ddd;
+    }
+
+    .menu-title {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: #333;
-      color: white;
-      padding: 0.8rem 1rem;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-    }
-    .navbar .logo {
-      font-size: 1.2rem;
+      padding: 16px;
       font-weight: bold;
-    }
-    .navbar ul {
-      list-style: none;
-      display: flex;
-      gap: 1.2rem;
-      margin: 0;
-      padding: 0;
-    }
-    .navbar a {
-      color: white;
-      text-decoration: none;
-      font-weight: 500;
-      transition: color 0.3s;
-    }
-    .navbar a:hover {
-      color: #ffa500;
-    }
-    .navbar .dropdown {
-      position: relative;
-    }
-    .navbar .dropdown-content {
-      display: none;
-      position: absolute;
-      background-color: white;
-      color: #333;
-      min-width: 160px;
-      box-shadow: 0px 4px 8px rgba(0,0,0,0.2);
-      z-index: 999;
-      top: 100%;
-      left: 0;
-      border-radius: 5px;
-      overflow: hidden;
-    }
-    .navbar .dropdown-content a {
-      color: #333;
-      padding: 10px 15px;
-      display: block;
-      text-decoration: none;
-    }
-    .navbar .dropdown-content a:hover {
-      background: #f1f1f1;
-    }
-    .navbar .dropdown:hover .dropdown-content {
-      display: block;
-    }
-
-    /* Burger Styles */
-    .burger {
-      display: none;
-      flex-direction: column;
       cursor: pointer;
-      gap: 5px;
-    }
-    .burger span {
-      width: 25px;
-      height: 3px;
-      background: white;
-      transition: 0.4s;
-    }
-    .burger.open span:nth-child(1) {
-      transform: rotate(45deg) translate(5px, 5px);
-    }
-    .burger.open span:nth-child(2) {
-      opacity: 0;
-    }
-    .burger.open span:nth-child(3) {
-      transform: rotate(-45deg) translate(5px, -5px);
     }
 
-    @media (max-width: 768px) {
-      .navbar ul {
-        display: none;
-        position: absolute;
-        top: 60px;
-        left: 0;
-        background: #333;
-        width: 100%;
-        flex-direction: column;
-        animation: slideDown 0.3s ease-out forwards;
-      }
-      .navbar ul.show {
-        display: flex;
-      }
-      .burger {
-        display: flex;
-      }
+    .submenu {
+      display: none;
+      padding: 0 16px 10px 32px;
+      font-size: 0.95rem;
     }
 
-    @keyframes slideDown {
-      from { opacity: 0; transform: translateY(-10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    header {
-      background: #ffa500;
-      color: #fff;
-      text-align: center;
-      padding: 1.5rem 1rem;
-    }
-    header h1 {
-      margin: 0;
-      font-size: 2rem;
-      text-transform: uppercase;
-    }
-    .hero {
-      background: linear-gradient(to right, #007BFF, #00BFFF);
-      color: white;
-      text-align: center;
-      padding: 2rem 1rem;
-    }
-    .hero h2 {
-      font-size: 1.8rem;
-      margin: 0.5rem 0;
-    }
-    .hero p {
-      font-size: 1.1rem;
-    }
-    .cta {
-      background: red;
-      color: white;
-      display: inline-block;
-      padding: 0.5rem 1rem;
-      margin-top: 1rem;
-      border-radius: 5px;
-      font-weight: bold;
-    }
-    .section-title {
-      text-align: center;
-      margin: 2rem 0 1rem;
-      font-size: 1.5rem;
+    .submenu a {
+      display: block;
       color: #333;
+      text-decoration: none;
+      padding: 8px 0;
     }
-    .product-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-      gap: 1rem;
-      padding: 0 1rem 2rem;
+
+    .submenu a:hover {
+      color: #007BFF;
     }
-    .product-grid div {
-      background: #fff;
-      padding: 1rem;
-      border-radius: 10px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      text-align: center;
-      font-size: 0.9rem;
+
+    .arrow {
+      transition: transform 0.3s ease;
     }
-    .brands {
-      text-align: center;
-      margin: 2rem 0;
+
+    .menu-item.open .submenu {
+      display: block;
     }
-    .brands img {
-      height: 40px;
-      margin: 0 10px;
-      vertical-align: middle;
+
+    .menu-item.open .arrow {
+      transform: rotate(180deg);
     }
-    .contact {
-      background: #333;
-      color: white;
-      padding: 2rem 1rem;
-      text-align: center;
+
+    .overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background-color: rgba(0,0,0,0.4);
+      z-index: 999;
     }
-    .contact p {
-      margin: 0.5rem 0;
-    }
-    footer {
-      background: #222;
-      color: #aaa;
-      text-align: center;
-      padding: 1rem;
-      font-size: 0.9rem;
+
+    .overlay.show {
+      display: block;
     }
   </style>
 </head>
-
 <body>
 
-  <!-- Navigation Bar -->
-  <nav class="navbar">
-    <div class="logo"><i class="fas fa-motorcycle"></i> Roop Scooters</div>
-    <div class="burger" onclick="toggleMenu(this)">
-      <span></span>
-      <span></span>
-      <span></span>
+<!-- Burger Icon -->
+<div class="burger" onclick="toggleMenu()">
+  <span></span>
+  <span></span>
+  <span></span>
+</div>
+
+<!-- Overlay -->
+<div class="overlay" id="overlay" onclick="toggleMenu()"></div>
+
+<!-- Side Menu -->
+<div class="side-menu" id="sideMenu">
+  <div class="menu-item">
+    <div class="menu-title" onclick="toggleSubmenu(this)">
+      Suspension & Steering <span class="arrow">▼</span>
     </div>
-    <ul id="nav-links">
-      <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
-      <li><a href="#about"><i class="fas fa-users"></i> About Us</a></li>
-      <li class="dropdown">
-        <a href="#products"><i class="fas fa-cogs"></i> Our Products</a>
-        <div class="dropdown-content">
-          <a href="#mirrors">Mirrors</a>
-          <a href="#indicators">Indicators</a>
-          <a href="#filters">Air Filters</a>
-          <a href="#levers">Kick Levers</a>
-          <a href="#accessories">Accessories</a>
-        </div>
-      </li>
-      <li><a href="#brands"><i class="fas fa-industry"></i> Brands</a></li>
-      <li><a href="#contact"><i class="fas fa-envelope"></i> Contact</a></li>
-    </ul>
-  </nav>
-
-  <!-- Hero Section -->
-  <header>
-    <h1>Roop Scooters (SRL Group)</h1>
-  </header>
-
-  <section class="hero">
-    <h2>Genuine Scooter Parts</h2>
-    <p>We Deal In Loose Packing Also</p>
-    <p>Full Range of 100cc & 150cc Spares</p>
-    <a href="#contact" class="cta">Become a Distributor</a>
-  </section>
-
-  <!-- Products -->
-  <h3 class="section-title" id="products">Our Products</h3>
-  <div class="product-grid">
-    <div id="mirrors">Mirrors</div>
-    <div id="indicators">Indicators</div>
-    <div id="filters">Air Filters</div>
-    <div id="levers">Kick Levers</div>
-    <div>Brake Pedals</div>
-    <div>Side Stands</div>
-    <div>Handle Grips</div>
-    <div>Gear Levers</div>
-    <div>Foot Rests</div>
-    <div>Wheel Covers</div>
-    <div>Front Panels</div>
-    <div>Headlight Covers</div>
+    <div class="submenu">
+      <a href="#">Shock Absorbers</a>
+      <a href="#">Tie Rods</a>
+    </div>
   </div>
-
-  <!-- Brands -->
-  <div class="brands" id="brands">
-    <h3>Brands We Support</h3>
-    <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Honda-logo.png" alt="Honda"/>
-    <img src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Hero_MotoCorp_Logo.png" alt="Hero"/>
-    <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Bajaj_Logo_New.png" alt="Bajaj"/>
-    <img src="https://upload.wikimedia.org/wikipedia/commons/8/8d/Yamaha_logo.svg" alt="Yamaha"/>
-    <img src="https://upload.wikimedia.org/wikipedia/commons/3/38/TVS_Motor_Company_logo.png" alt="TVS"/>
+  <div class="menu-item">
+    <div class="menu-title" onclick="toggleSubmenu(this)">
+      Body Parts <span class="arrow">▼</span>
+    </div>
+    <div class="submenu">
+      <a href="#">Bumpers</a>
+      <a href="#">Fenders</a>
+    </div>
   </div>
+  <div class="menu-item">
+    <div class="menu-title" onclick="toggleSubmenu(this)">
+      HVAC <span class="arrow">▼</span>
+    </div>
+    <div class="submenu">
+      <a href="#">Compressors</a>
+      <a href="#">Condensers</a>
+    </div>
+  </div>
+  <div class="menu-item">
+    <div class="menu-title" onclick="toggleSubmenu(this)">
+      Engine Parts <span class="arrow">▼</span>
+    </div>
+    <div class="submenu">
+      <a href="#">Gaskets</a>
+      <a href="#">Pistons</a>
+    </div>
+  </div>
+  <div class="menu-item">
+    <div class="menu-title" onclick="toggleSubmenu(this)">
+      Transmission <span class="arrow">▼</span>
+    </div>
+    <div class="submenu">
+      <a href="#">Clutches</a>
+      <a href="#">Gearbox</a>
+    </div>
+  </div>
+  <div class="menu-item">
+    <div class="menu-title" onclick="toggleSubmenu(this)">
+      Brake <span class="arrow">▼</span>
+    </div>
+    <div class="submenu">
+      <a href="#">Brake Pads</a>
+      <a href="#">Discs</a>
+    </div>
+  </div>
+  <div class="menu-item">
+    <div class="menu-title" onclick="toggleSubmenu(this)">
+      Electrical <span class="arrow">▼</span>
+    </div>
+    <div class="submenu">
+      <a href="#">Batteries</a>
+      <a href="#">Sensors</a>
+    </div>
+  </div>
+  <div class="menu-item">
+    <div class="menu-title" onclick="toggleSubmenu(this)">
+      Accessories <span class="arrow">▼</span>
+    </div>
+    <div class="submenu">
+      <a href="#">Floor Mats</a>
+      <a href="#">Covers</a>
+    </div>
+  </div>
+</div>
 
-  <!-- Contact -->
-  <section class="contact" id="contact">
-    <h3>Contact Us</h3>
-    <p><strong>Roop Scooters</strong></p>
-    <p>21/1378, Naiwala, Karol Bagh, New Delhi - 110005</p>
-    <p>Phone: 011-28754325</p>
-    <p>Mobile: 0981115054, 09871401771</p>
-    <p>Email: roopscooter@gmail.com</p>
-    <p>Email: rajnis99@yahoo.com</p>
-  </section>
+<!-- Script -->
+<script>
+  const sideMenu = document.getElementById('sideMenu');
+  const overlay = document.getElementById('overlay');
 
-  <footer>
-    &copy; 2025 Roop Scooters (SRL Group). All rights reserved.
-  </footer>
+  function toggleMenu() {
+    sideMenu.classList.toggle('open');
+    overlay.classList.toggle('show');
+  }
 
-  <!-- JavaScript for Burger Toggle -->
-  <script>
-    function toggleMenu(icon) {
-      const nav = document.getElementById('nav-links');
-      nav.classList.toggle('show');
-      icon.classList.toggle('open');
-    }
-  </script>
+  function toggleSubmenu(titleElement) {
+    const item = titleElement.parentElement;
+    item.classList.toggle('open');
+  }
+</script>
+
 </body>
 </html>
