@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Roop Scooters - SRL Group</title>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <style>
     body {
       margin: 0;
@@ -12,7 +13,7 @@
       background: #f4f4f4;
     }
 
-    /* Top bar styles */
+    /* Navbar Styles */
     .navbar {
       display: flex;
       justify-content: space-between;
@@ -20,7 +21,9 @@
       background: #333;
       color: white;
       padding: 0.8rem 1rem;
-      position: relative;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
     }
     .navbar .logo {
       font-size: 1.2rem;
@@ -37,6 +40,10 @@
       color: white;
       text-decoration: none;
       font-weight: 500;
+      transition: color 0.3s;
+    }
+    .navbar a:hover {
+      color: #ffa500;
     }
     .navbar .dropdown {
       position: relative;
@@ -48,9 +55,11 @@
       color: #333;
       min-width: 160px;
       box-shadow: 0px 4px 8px rgba(0,0,0,0.2);
-      z-index: 1;
+      z-index: 999;
       top: 100%;
       left: 0;
+      border-radius: 5px;
+      overflow: hidden;
     }
     .navbar .dropdown-content a {
       color: #333;
@@ -58,11 +67,14 @@
       display: block;
       text-decoration: none;
     }
+    .navbar .dropdown-content a:hover {
+      background: #f1f1f1;
+    }
     .navbar .dropdown:hover .dropdown-content {
       display: block;
     }
 
-    /* Burger menu */
+    /* Burger Styles */
     .burger {
       display: none;
       flex-direction: column;
@@ -73,6 +85,16 @@
       width: 25px;
       height: 3px;
       background: white;
+      transition: 0.4s;
+    }
+    .burger.open span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+    .burger.open span:nth-child(2) {
+      opacity: 0;
+    }
+    .burger.open span:nth-child(3) {
+      transform: rotate(-45deg) translate(5px, -5px);
     }
 
     @media (max-width: 768px) {
@@ -84,6 +106,7 @@
         background: #333;
         width: 100%;
         flex-direction: column;
+        animation: slideDown 0.3s ease-out forwards;
       }
       .navbar ul.show {
         display: flex;
@@ -91,6 +114,11 @@
       .burger {
         display: flex;
       }
+    }
+
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     header {
@@ -173,33 +201,36 @@
     }
   </style>
 </head>
+
 <body>
 
-  <!-- Navbar with burger -->
+  <!-- Navigation Bar -->
   <nav class="navbar">
-    <div class="logo">Roop Scooters</div>
-    <div class="burger" onclick="toggleMenu()">
+    <div class="logo"><i class="fas fa-motorcycle"></i> Roop Scooters</div>
+    <div class="burger" onclick="toggleMenu(this)">
       <span></span>
       <span></span>
       <span></span>
     </div>
     <ul id="nav-links">
-      <li><a href="#">Home</a></li>
-      <li><a href="#about">About Us</a></li>
+      <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
+      <li><a href="#about"><i class="fas fa-users"></i> About Us</a></li>
       <li class="dropdown">
-        <a href="#products">Our Products</a>
+        <a href="#products"><i class="fas fa-cogs"></i> Our Products</a>
         <div class="dropdown-content">
           <a href="#mirrors">Mirrors</a>
           <a href="#indicators">Indicators</a>
           <a href="#filters">Air Filters</a>
           <a href="#levers">Kick Levers</a>
+          <a href="#accessories">Accessories</a>
         </div>
       </li>
-      <li><a href="#brands">Brands</a></li>
-      <li><a href="#contact">Contact</a></li>
+      <li><a href="#brands"><i class="fas fa-industry"></i> Brands</a></li>
+      <li><a href="#contact"><i class="fas fa-envelope"></i> Contact</a></li>
     </ul>
   </nav>
 
+  <!-- Hero Section -->
   <header>
     <h1>Roop Scooters (SRL Group)</h1>
   </header>
@@ -211,6 +242,7 @@
     <a href="#contact" class="cta">Become a Distributor</a>
   </section>
 
+  <!-- Products -->
   <h3 class="section-title" id="products">Our Products</h3>
   <div class="product-grid">
     <div id="mirrors">Mirrors</div>
@@ -227,6 +259,7 @@
     <div>Headlight Covers</div>
   </div>
 
+  <!-- Brands -->
   <div class="brands" id="brands">
     <h3>Brands We Support</h3>
     <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Honda-logo.png" alt="Honda"/>
@@ -236,6 +269,7 @@
     <img src="https://upload.wikimedia.org/wikipedia/commons/3/38/TVS_Motor_Company_logo.png" alt="TVS"/>
   </div>
 
+  <!-- Contact -->
   <section class="contact" id="contact">
     <h3>Contact Us</h3>
     <p><strong>Roop Scooters</strong></p>
@@ -250,11 +284,13 @@
     &copy; 2025 Roop Scooters (SRL Group). All rights reserved.
   </footer>
 
+  <!-- JavaScript for Burger Toggle -->
   <script>
-    function toggleMenu() {
-      document.getElementById('nav-links').classList.toggle('show');
+    function toggleMenu(icon) {
+      const nav = document.getElementById('nav-links');
+      nav.classList.toggle('show');
+      icon.classList.toggle('open');
     }
   </script>
-
 </body>
 </html>
