@@ -11,6 +11,88 @@
       font-family: 'Roboto', sans-serif;
       background: #f4f4f4;
     }
+
+    /* Top bar styles */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #333;
+      color: white;
+      padding: 0.8rem 1rem;
+      position: relative;
+    }
+    .navbar .logo {
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+    .navbar ul {
+      list-style: none;
+      display: flex;
+      gap: 1.2rem;
+      margin: 0;
+      padding: 0;
+    }
+    .navbar a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .navbar .dropdown {
+      position: relative;
+    }
+    .navbar .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: white;
+      color: #333;
+      min-width: 160px;
+      box-shadow: 0px 4px 8px rgba(0,0,0,0.2);
+      z-index: 1;
+      top: 100%;
+      left: 0;
+    }
+    .navbar .dropdown-content a {
+      color: #333;
+      padding: 10px 15px;
+      display: block;
+      text-decoration: none;
+    }
+    .navbar .dropdown:hover .dropdown-content {
+      display: block;
+    }
+
+    /* Burger menu */
+    .burger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      gap: 5px;
+    }
+    .burger span {
+      width: 25px;
+      height: 3px;
+      background: white;
+    }
+
+    @media (max-width: 768px) {
+      .navbar ul {
+        display: none;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        background: #333;
+        width: 100%;
+        flex-direction: column;
+      }
+      .navbar ul.show {
+        display: flex;
+      }
+      .burger {
+        display: flex;
+      }
+    }
+
     header {
       background: #ffa500;
       color: #fff;
@@ -93,6 +175,31 @@
 </head>
 <body>
 
+  <!-- Navbar with burger -->
+  <nav class="navbar">
+    <div class="logo">Roop Scooters</div>
+    <div class="burger" onclick="toggleMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <ul id="nav-links">
+      <li><a href="#">Home</a></li>
+      <li><a href="#about">About Us</a></li>
+      <li class="dropdown">
+        <a href="#products">Our Products</a>
+        <div class="dropdown-content">
+          <a href="#mirrors">Mirrors</a>
+          <a href="#indicators">Indicators</a>
+          <a href="#filters">Air Filters</a>
+          <a href="#levers">Kick Levers</a>
+        </div>
+      </li>
+      <li><a href="#brands">Brands</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
   <header>
     <h1>Roop Scooters (SRL Group)</h1>
   </header>
@@ -104,12 +211,12 @@
     <a href="#contact" class="cta">Become a Distributor</a>
   </section>
 
-  <h3 class="section-title">Our Products</h3>
+  <h3 class="section-title" id="products">Our Products</h3>
   <div class="product-grid">
-    <div>Mirrors</div>
-    <div>Indicators</div>
-    <div>Air Filters</div>
-    <div>Kick Levers</div>
+    <div id="mirrors">Mirrors</div>
+    <div id="indicators">Indicators</div>
+    <div id="filters">Air Filters</div>
+    <div id="levers">Kick Levers</div>
     <div>Brake Pedals</div>
     <div>Side Stands</div>
     <div>Handle Grips</div>
@@ -120,7 +227,7 @@
     <div>Headlight Covers</div>
   </div>
 
-  <div class="brands">
+  <div class="brands" id="brands">
     <h3>Brands We Support</h3>
     <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Honda-logo.png" alt="Honda"/>
     <img src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Hero_MotoCorp_Logo.png" alt="Hero"/>
@@ -142,6 +249,12 @@
   <footer>
     &copy; 2025 Roop Scooters (SRL Group). All rights reserved.
   </footer>
+
+  <script>
+    function toggleMenu() {
+      document.getElementById('nav-links').classList.toggle('show');
+    }
+  </script>
 
 </body>
 </html>
