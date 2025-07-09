@@ -3,274 +3,416 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Styled Side Menu with Images</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet"/>
+  <title>Roop Scooters - SRL Group</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <style>
     body {
       margin: 0;
-      font-family: 'Inter', sans-serif;
-      background-color: #fff;
+      font-family: 'Roboto', sans-serif;
+      background: #f4f4f4;
     }
 
-    /* Burger Icon */
-    .burger {
-      position: fixed;
-      top: 15px;
-      left: 15px;
-      width: 30px;
-      height: 25px;
-      cursor: pointer;
-      z-index: 1001;
-    }
-
-    .burger span {
-      display: block;
-      height: 3px;
-      background: #000;
-      margin: 5px 0;
-      border-radius: 2px;
-    }
-
-    /* Overlay */
-    .overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background-color: rgba(0,0,0,0.5);
-      z-index: 999;
-    }
-
-    .overlay.show {
-      display: block;
-    }
-
-    /* Side Menu */
-    .side-menu {
-      position: fixed;
-      top: 0;
-      left: -100%;
-      width: 280px;
-      height: 100%;
-      background: #fff;
-      box-shadow: 2px 0 8px rgba(0,0,0,0.1);
-      overflow-y: auto;
-      transition: 0.3s ease;
-      z-index: 1000;
-      padding-top: 60px;
-    }
-
-    .side-menu.open {
-      left: 0;
-    }
-
-    .menu-item {
-      border-bottom: 1px solid #E0E0E0;
-    }
-
-    .menu-title {
+    /* Navbar Styles */
+    .navbar {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 14px 20px;
-      font-size: 16px;
-      font-weight: 600;
-      color: #333;
-      background-color: #fff;
-      cursor: pointer;
+      background: #333;
+      color: white;
+      padding: 0.8rem 1rem;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
     }
-
-    .menu-title:hover {
-      background-color: #f9f9f9;
+    .navbar .logo {
+      font-size: 1.2rem;
+      font-weight: bold;
     }
-
-    .menu-title-content {
+    .navbar ul {
+      list-style: none;
       display: flex;
-      align-items: center;
-      gap: 10px;
+      gap: 1.2rem;
+      margin: 0;
+      padding: 0;
     }
-
-    .menu-title img {
-      width: 24px;
-      height: 24px;
-      object-fit: contain;
-    }
-
-    .arrow {
-      font-size: 16px;
-      transition: transform 0.3s ease;
-    }
-
-    .menu-item.open .arrow {
-      transform: rotate(180deg);
-    }
-
-    .submenu {
-      display: none;
-      padding: 0 20px 12px 54px;
-      background-color: #fafafa;
-    }
-
-    .submenu a {
-      display: block;
-      color: #333;
+    .navbar a {
+      color: white;
       text-decoration: none;
-      padding: 8px 0;
-      font-size: 14px;
+      font-weight: 500;
+      transition: color 0.3s;
     }
-
-    .submenu a:hover {
-      color: #007BFF;
+    .navbar a:hover {
+      color: #ffa500;
     }
-
-    .menu-item.open .submenu {
+    .navbar .dropdown {
+      position: relative;
+    }
+    .navbar .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: white;
+      color: #333;
+      min-width: 160px;
+      box-shadow: 0px 4px 8px rgba(0,0,0,0.2);
+      z-index: 999;
+      top: 100%;
+      left: 0;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+    .navbar .dropdown-content a {
+      color: #333;
+      padding: 10px 15px;
       display: block;
+      text-decoration: none;
+    }
+    .navbar .dropdown-content a:hover {
+      background: #f1f1f1;
+    }
+    .navbar .dropdown:hover .dropdown-content {
+      display: block;
+    }
+
+    .burger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      gap: 5px;
+    }
+    .burger span {
+      width: 25px;
+      height: 3px;
+      background: white;
+      transition: 0.4s;
+    }
+    .burger.open span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+    .burger.open span:nth-child(2) {
+      opacity: 0;
+    }
+    .burger.open span:nth-child(3) {
+      transform: rotate(-45deg) translate(5px, -5px);
+    }
+
+    @media (max-width: 768px) {
+      .navbar ul {
+        display: none;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        background: #333;
+        width: 100%;
+        flex-direction: column;
+        animation: slideDown 0.3s ease-out forwards;
+      }
+      .navbar ul.show {
+        display: flex;
+      }
+      .burger {
+        display: flex;
+      }
+    }
+
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    header {
+      background: #ffa500;
+      color: #fff;
+      text-align: center;
+      padding: 1.5rem 1rem;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2rem;
+      text-transform: uppercase;
+    }
+
+    .hero {
+      background: linear-gradient(to right, #007BFF, #00BFFF);
+      color: white;
+      text-align: center;
+      padding: 2rem 1rem;
+    }
+    .hero h2 {
+      font-size: 1.8rem;
+      margin: 0.5rem 0;
+    }
+    .hero p {
+      font-size: 1.1rem;
+    }
+    .cta {
+      background: red;
+      color: white;
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      margin-top: 1rem;
+      border-radius: 5px;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    /* Carousel Styles */
+    .carousel {
+      position: relative;
+      width: 100%;
+      max-width: 1000px;
+      margin: 2rem auto;
+      overflow: hidden;
+      border-radius: 12px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+    }
+    .carousel-track {
+      display: flex;
+      transition: transform 0.5s ease;
+    }
+    .carousel img {
+      width: 100%;
+      flex-shrink: 0;
+      height: 300px;
+      object-fit: cover;
+    }
+    .carousel-buttons {
+      position: absolute;
+      top: 50%;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      transform: translateY(-50%);
+      padding: 0 1rem;
+    }
+    .carousel-buttons button {
+      background: rgba(0,0,0,0.5);
+      color: white;
+      border: none;
+      font-size: 2rem;
+      padding: 0.4rem 0.8rem;
+      cursor: pointer;
+      border-radius: 50%;
+      transition: background 0.3s;
+    }
+    .carousel-buttons button:hover {
+      background: rgba(0,0,0,0.8);
+    }
+
+    .section-title {
+      text-align: center;
+      margin: 2rem 0 1rem;
+      font-size: 1.5rem;
+      color: #333;
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 1rem;
+      padding: 0 1rem 2rem;
+    }
+    .product-grid div {
+      background: #fff;
+      padding: 1rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    .product-grid img {
+      width: 100%;
+      height: 120px;
+      object-fit: contain;
+      margin-bottom: 0.5rem;
+    }
+
+    .brands {
+      text-align: center;
+      margin: 2rem 0;
+    }
+    .brands img {
+      height: 40px;
+      margin: 0 10px;
+      vertical-align: middle;
+    }
+
+    .contact {
+      background: #333;
+      color: white;
+      padding: 2rem 1rem;
+      text-align: center;
+    }
+    .contact p {
+      margin: 0.5rem 0;
+    }
+
+    footer {
+      background: #222;
+      color: #aaa;
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
     }
   </style>
 </head>
 <body>
 
-<!-- Burger Icon -->
-<div class="burger" onclick="toggleMenu()">
-  <span></span>
-  <span></span>
-  <span></span>
-</div>
-
-<!-- Overlay -->
-<div class="overlay" id="overlay" onclick="toggleMenu()"></div>
-
-<!-- Side Menu -->
-<div class="side-menu" id="sideMenu">
-
-  <div class="menu-item">
-    <div class="menu-title" onclick="toggleSubmenu(this)">
-      <div class="menu-title-content">
-        <img src="https://img.icons8.com/ios/50/suspension.png" alt="Suspension" />
-        <span>Suspension & Steering</span>
-      </div>
-      <span class="arrow">⌄</span>
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="logo"><i class="fas fa-motorcycle"></i> Roop Scooters</div>
+    <div class="burger" onclick="toggleMenu(this)">
+      <span></span><span></span><span></span>
     </div>
-    <div class="submenu">
-      <a href="#">Shock Absorbers</a>
-      <a href="#">Tie Rods</a>
+    <ul id="nav-links">
+      <li><a href="#">Home</a></li>
+      <li><a href="#about">About Us</a></li>
+      <li class="dropdown">
+        <a href="#products">Our Products</a>
+        <div class="dropdown-content">
+          <a href="#mirrors">Mirrors</a>
+          <a href="#indicators">Indicators</a>
+          <a href="#filters">Air Filters</a>
+          <a href="#levers">Kick Levers</a>
+          <a href="#accessories">Accessories</a>
+        </div>
+      </li>
+      <li><a href="#brands">Brands</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero Section -->
+  <header>
+    <h1>Roop Scooters (SRL Group)</h1>
+  </header>
+
+  <section class="hero">
+    <h2>Genuine Scooter Parts</h2>
+    <p>We Deal In Loose Packing Also</p>
+    <p>Full Range of 100cc & 150cc Spares</p>
+    <a href="#contact" class="cta">Become a Distributor</a>
+  </section>
+
+  <!-- Carousel -->
+  <div class="carousel">
+    <div class="carousel-track">
+      <img src="https://source.unsplash.com/1000x300/?scooter,spare1" alt="Slide 1">
+      <img src="https://source.unsplash.com/1000x300/?scooter,spare2" alt="Slide 2">
+      <img src="https://source.unsplash.com/1000x300/?scooter,spare3" alt="Slide 3">
+    </div>
+    <div class="carousel-buttons">
+      <button onclick="prevSlide()">&#10094;</button>
+      <button onclick="nextSlide()">&#10095;</button>
     </div>
   </div>
 
-  <div class="menu-item">
-    <div class="menu-title" onclick="toggleSubmenu(this)">
-      <div class="menu-title-content">
-        <img src="https://img.icons8.com/ios/50/car-body.png" alt="Body Parts" />
-        <span>Body Parts</span>
-      </div>
-      <span class="arrow">⌄</span>
+  <!-- Products -->
+  <h3 class="section-title" id="products">Our Products</h3>
+  <div class="product-grid">
+    <div id="mirrors">
+      <img src="https://source.unsplash.com/200x200/?scooter,mirror" alt="Mirror">
+      Mirrors
     </div>
-    <div class="submenu">
-      <a href="#">Bumpers</a>
-      <a href="#">Fenders</a>
+    <div id="indicators">
+      <img src="https://source.unsplash.com/200x200/?scooter,indicator" alt="Indicator">
+      Indicators
     </div>
-  </div>
-
-  <div class="menu-item">
-    <div class="menu-title" onclick="toggleSubmenu(this)">
-      <div class="menu-title-content">
-        <img src="https://img.icons8.com/ios/50/air-conditioner.png" alt="HVAC" />
-        <span>HVAC</span>
-      </div>
-      <span class="arrow">⌄</span>
+    <div id="filters">
+      <img src="https://source.unsplash.com/200x200/?airfilter,scooter" alt="Air Filter">
+      Air Filters
     </div>
-    <div class="submenu">
-      <a href="#">Compressors</a>
-      <a href="#">Condensers</a>
+    <div id="levers">
+      <img src="https://source.unsplash.com/200x200/?kick,lever" alt="Kick Lever">
+      Kick Levers
     </div>
-  </div>
-
-  <div class="menu-item">
-    <div class="menu-title" onclick="toggleSubmenu(this)">
-      <div class="menu-title-content">
-        <img src="https://img.icons8.com/ios/50/engine.png" alt="Engine Parts" />
-        <span>Engine Parts</span>
-      </div>
-      <span class="arrow">⌄</span>
+    <div>
+      <img src="https://source.unsplash.com/200x200/?brake,pedal" alt="Brake Pedal">
+      Brake Pedals
     </div>
-    <div class="submenu">
-      <a href="#">Gaskets</a>
-      <a href="#">Pistons</a>
+    <div>
+      <img src="https://source.unsplash.com/200x200/?side,stand" alt="Side Stand">
+      Side Stands
     </div>
-  </div>
-
-  <div class="menu-item">
-    <div class="menu-title" onclick="toggleSubmenu(this)">
-      <div class="menu-title-content">
-        <img src="https://img.icons8.com/ios/50/gearbox.png" alt="Transmission" />
-        <span>Transmission</span>
-      </div>
-      <span class="arrow">⌄</span>
+    <div>
+      <img src="https://source.unsplash.com/200x200/?handle,grip" alt="Handle Grip">
+      Handle Grips
     </div>
-    <div class="submenu">
-      <a href="#">Clutches</a>
-      <a href="#">Gearbox</a>
+    <div>
+      <img src="https://source.unsplash.com/200x200/?gear,lever" alt="Gear Lever">
+      Gear Levers
+    </div>
+    <div>
+      <img src="https://source.unsplash.com/200x200/?foot,rest" alt="Foot Rest">
+      Foot Rests
+    </div>
+    <div>
+      <img src="https://source.unsplash.com/200x200/?wheel,cover" alt="Wheel Cover">
+      Wheel Covers
+    </div>
+    <div>
+      <img src="https://source.unsplash.com/200x200/?front,panel" alt="Front Panel">
+      Front Panels
+    </div>
+    <div>
+      <img src="https://source.unsplash.com/200x200/?headlight,cover" alt="Headlight Cover">
+      Headlight Covers
     </div>
   </div>
 
-  <div class="menu-item">
-    <div class="menu-title" onclick="toggleSubmenu(this)">
-      <div class="menu-title-content">
-        <img src="https://img.icons8.com/ios/50/brake-discs.png" alt="Brake" />
-        <span>Brake</span>
-      </div>
-      <span class="arrow">⌄</span>
-    </div>
-    <div class="submenu">
-      <a href="#">Brake Pads</a>
-      <a href="#">Discs</a>
-    </div>
+  <!-- Brands -->
+  <div class="brands" id="brands">
+    <h3>Brands We Support</h3>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Honda-logo.png" alt="Honda"/>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Hero_MotoCorp_Logo.png" alt="Hero"/>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Bajaj_Logo_New.png" alt="Bajaj"/>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/8/8d/Yamaha_logo.svg" alt="Yamaha"/>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/3/38/TVS_Motor_Company_logo.png" alt="TVS"/>
   </div>
 
-  <div class="menu-item">
-    <div class="menu-title" onclick="toggleSubmenu(this)">
-      <div class="menu-title-content">
-        <img src="https://img.icons8.com/ios/50/car-battery.png" alt="Electrical" />
-        <span>Electrical</span>
-      </div>
-      <span class="arrow">⌄</span>
-    </div>
-    <div class="submenu">
-      <a href="#">Batteries</a>
-      <a href="#">Sensors</a>
-    </div>
-  </div>
+  <!-- Contact -->
+  <section class="contact" id="contact">
+    <h3>Contact Us</h3>
+    <p><strong>Roop Scooters</strong></p>
+    <p>21/1378, Naiwala, Karol Bagh, New Delhi - 110005</p>
+    <p>Phone: 011-28754325</p>
+    <p>Mobile: 0981115054, 09871401771</p>
+    <p>Email: roopscooter@gmail.com</p>
+    <p>Email: rajnis99@yahoo.com</p>
+  </section>
 
-  <div class="menu-item">
-    <div class="menu-title" onclick="toggleSubmenu(this)">
-      <div class="menu-title-content">
-        <img src="https://img.icons8.com/ios/50/car-seat.png" alt="Accessories" />
-        <span>Accessories</span>
-      </div>
-      <span class="arrow">⌄</span>
-    </div>
-    <div class="submenu">
-      <a href="#">Floor Mats</a>
-      <a href="#">Covers</a>
-    </div>
-  </div>
+  <footer>
+    &copy; 2025 Roop Scooters (SRL Group). All rights reserved.
+  </footer>
 
-</div>
+  <script>
+    function toggleMenu(icon) {
+      const nav = document.getElementById('nav-links');
+      nav.classList.toggle('show');
+      icon.classList.toggle('open');
+    }
 
-<!-- JavaScript -->
-<script>
-  const sideMenu = document.getElementById('sideMenu');
-  const overlay = document.getElementById('overlay');
+    let currentSlide = 0;
+    const track = document.querySelector('.carousel-track');
+    const slides = document.querySelectorAll('.carousel img');
 
-  function toggleMenu() {
-    sideMenu.classList.toggle('open');
-    overlay.classList.toggle('show');
-  }
+    function updateSlide() {
+      const slideWidth = slides[0].clientWidth;
+      track.style.transform = `translateX(-${currentSlide * slideWidth}px)`;
+    }
 
-  function toggleSubmenu(titleElement) {
-    const item = titleElement.parentElement;
-    item.classList.toggle('open');
-  }
-</script>
+    function nextSlide() {
+      currentSlide = (currentSlide + 1) % slides.length;
+      updateSlide();
+    }
+
+    function prevSlide() {
+      currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+      updateSlide();
+    }
+
+    setInterval(nextSlide, 4000);
+    window.addEventListener('resize', updateSlide);
+  </script>
 
 </body>
 </html>
